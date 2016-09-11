@@ -176,10 +176,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ComponentTypesController.cs" />
+    <Compile Include="Controllers\PricipalController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\WarehousesController.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
+    <Compile Include="Migrations\201609111901004_initial.cs" />
+    <Compile Include="Migrations\201609111901004_initial.Designer.cs">
+      <DependentUpon>201609111901004_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ComponentType.cs" />
+    <Compile Include="Models\Principal.cs" />
     <Compile Include="Models\Warehouse.cs" />
     <Compile Include="Properties\App_Start\BundleConfig.cs" />
     <Compile Include="Properties\App_Start\FilterConfig.cs" />
@@ -297,6 +304,11 @@
     <Content Include="Views\Status\Details.cshtml" />
     <Content Include="Views\Status\Edit.cshtml" />
     <Content Include="Views\Status\Index.cshtml" />
+    <Content Include="Views\Pricipal\Create.cshtml" />
+    <Content Include="Views\Pricipal\Delete.cshtml" />
+    <Content Include="Views\Pricipal\Details.cshtml" />
+    <Content Include="Views\Pricipal\Edit.cshtml" />
+    <Content Include="Views\Pricipal\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -309,6 +321,11 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201609111901004_initial.resx">
+      <DependentUpon>201609111901004_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
