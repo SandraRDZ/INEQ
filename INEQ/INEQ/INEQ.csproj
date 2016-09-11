@@ -176,18 +176,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ComponentTypesController.cs" />
-    <Compile Include="Controllers\PricipalController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\WarehousesController.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
-    <Compile Include="Migrations\201609111901004_initial.cs" />
-    <Compile Include="Migrations\201609111901004_initial.Designer.cs">
-      <DependentUpon>201609111901004_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ComponentType.cs" />
-    <Compile Include="Models\Principal.cs" />
-    <Compile Include="Models\Warehouse.cs" />
     <Compile Include="Properties\App_Start\BundleConfig.cs" />
     <Compile Include="Properties\App_Start\FilterConfig.cs" />
     <Compile Include="Properties\App_Start\RouteConfig.cs" />
@@ -196,7 +187,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Equipment.cs" />
     <Compile Include="Models\Statu.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
@@ -304,14 +294,10 @@
     <Content Include="Views\Status\Details.cshtml" />
     <Content Include="Views\Status\Edit.cshtml" />
     <Content Include="Views\Status\Index.cshtml" />
-    <Content Include="Views\Pricipal\Create.cshtml" />
-    <Content Include="Views\Pricipal\Delete.cshtml" />
-    <Content Include="Views\Pricipal\Details.cshtml" />
-    <Content Include="Views\Pricipal\Edit.cshtml" />
-    <Content Include="Views\Pricipal\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Base de Datos\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
@@ -323,9 +309,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201609111901004_initial.resx">
-      <DependentUpon>201609111901004_initial.cs</DependentUpon>
-    </EmbeddedResource>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
