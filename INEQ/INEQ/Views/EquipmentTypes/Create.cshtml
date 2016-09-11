@@ -1,4 +1,4 @@
-﻿@model BaseDatos.Warehouse
+﻿@model BaseDatos.EquipmentType
 
 @{
     ViewBag.Title = "Create";
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Warehouse</h4>
+        <h4>EquipmentType</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -24,18 +24,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IS, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UsefulLife, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IS, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IS, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.UsefulLife, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UsefulLife, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Responsable, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.GuaranteeDuration, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Responsable, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Responsable, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.GuaranteeDuration, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GuaranteeDuration, "", new { @class = "text-danger" })
             </div>
         </div>
 

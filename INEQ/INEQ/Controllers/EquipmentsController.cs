@@ -3,32 +3,33 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using INEQ.Content;
-using INEQ.Models;
+using BaseDatos;
 
-namespace INEQ.Views.Add
+namespace INEQ.Controllers
 {
     public class EquipmentsController : Controller
     {
-        private dbINEQcontext db = new dbINEQcontext();
+        private IneqDev db = new IneqDev();
 
         // GET: Equipments
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(db.Equipment.ToList());
+            var equipments = db.Equipments.Include(e => e.Brand).Include(e => e.EquipmentType).Include(e => e.Model).Include(e => e.Status).Include(e => e.Warehouse);
+            return View(await equipments.ToListAsync());
         }
 
         // GET: Equipments/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Equipment equipment = db.Equipment.Find(id);
+            Equipment equipment = await db.Equipments.FindAsync(id);
             if (equipment == null)
             {
                 return HttpNotFound();
@@ -39,65 +40,85 @@ namespace INEQ.Views.Add
         // GET: Equipments/Create
         public ActionResult Create()
         {
+            ViewBag.BrandId = new SelectList(db.Brands, "Id", "Description");
+            ViewBag.EquipmentTypeId = new SelectList(db.EquipmentTypes, "Id", "Description");
+            ViewBag.ModelId = new SelectList(db.Models, "Id", "Description");
+            ViewBag.StatusId = new SelectList(db.Status, "Id", "Description");
+            ViewBag.WarehouseId = new SelectList(db.Warehouses, "Id", "Description");
             return View();
         }
 
         // POST: Equipments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,StatusID,EquipmentTypeld,Modelld,Brandld,WarehouseId,EntryDate,Serie,SofttekId,Active")] Equipment equipment)
+        public async Task<ActionResult> Create([Bind(Include = "Id,EquipmentTypeId,ModelId,BrandId,StatusId,WarehouseId,EntryDate,Serie,SofttekId,Active")] Equipment equipment)
         {
             if (ModelState.IsValid)
             {
-                db.Equipment.Add(equipment);
-                db.SaveChanges();
+                db.Equipments.Add(equipment);
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.BrandId = new SelectList(db.Brands, "Id", "Description", equipment.BrandId);
+            ViewBag.EquipmentTypeId = new SelectList(db.EquipmentTypes, "Id", "Description", equipment.EquipmentTypeId);
+            ViewBag.ModelId = new SelectList(db.Models, "Id", "Description", equipment.ModelId);
+            ViewBag.StatusId = new SelectList(db.Status, "Id", "Description", equipment.StatusId);
+            ViewBag.WarehouseId = new SelectList(db.Warehouses, "Id", "Description", equipment.WarehouseId);
             return View(equipment);
         }
 
         // GET: Equipments/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Equipment equipment = db.Equipment.Find(id);
+            Equipment equipment = await db.Equipments.FindAsync(id);
             if (equipment == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.BrandId = new SelectList(db.Brands, "Id", "Description", equipment.BrandId);
+            ViewBag.EquipmentTypeId = new SelectList(db.EquipmentTypes, "Id", "Description", equipment.EquipmentTypeId);
+            ViewBag.ModelId = new SelectList(db.Models, "Id", "Description", equipment.ModelId);
+            ViewBag.StatusId = new SelectList(db.Status, "Id", "Description", equipment.StatusId);
+            ViewBag.WarehouseId = new SelectList(db.Warehouses, "Id", "Description", equipment.WarehouseId);
             return View(equipment);
         }
 
         // POST: Equipments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,StatusID,EquipmentTypeld,Modelld,Brandld,WarehouseId,EntryDate,Serie,SofttekId,Active")] Equipment equipment)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,EquipmentTypeId,ModelId,BrandId,StatusId,WarehouseId,EntryDate,Serie,SofttekId,Active")] Equipment equipment)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(equipment).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewBag.BrandId = new SelectList(db.Brands, "Id", "Description", equipment.BrandId);
+            ViewBag.EquipmentTypeId = new SelectList(db.EquipmentTypes, "Id", "Description", equipment.EquipmentTypeId);
+            ViewBag.ModelId = new SelectList(db.Models, "Id", "Description", equipment.ModelId);
+            ViewBag.StatusId = new SelectList(db.Status, "Id", "Description", equipment.StatusId);
+            ViewBag.WarehouseId = new SelectList(db.Warehouses, "Id", "Description", equipment.WarehouseId);
             return View(equipment);
         }
 
         // GET: Equipments/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Equipment equipment = db.Equipment.Find(id);
+            Equipment equipment = await db.Equipments.FindAsync(id);
             if (equipment == null)
             {
                 return HttpNotFound();
@@ -108,11 +129,11 @@ namespace INEQ.Views.Add
         // POST: Equipments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Equipment equipment = db.Equipment.Find(id);
-            db.Equipment.Remove(equipment);
-            db.SaveChanges();
+            Equipment equipment = await db.Equipments.FindAsync(id);
+            db.Equipments.Remove(equipment);
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

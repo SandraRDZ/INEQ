@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -10,108 +11,108 @@ using BaseDatos;
 
 namespace INEQ.Controllers
 {
-    public class ComponentTypesController : Controller
+    public class EquipmentTypesController : Controller
     {
         private IneqDev db = new IneqDev();
 
-        // GET: ComponentTypes
-        public ActionResult Index()
+        // GET: EquipmentTypes
+        public async Task<ActionResult> Index()
         {
-            return View(db.ComponentTypes.ToList());
+            return View(await db.EquipmentTypes.ToListAsync());
         }
 
-        // GET: ComponentTypes/Details/5
-        public ActionResult Details(int? id)
+        // GET: EquipmentTypes/Details/5
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ComponentType componentType = db.ComponentTypes.Find(id);
-            if (componentType == null)
+            EquipmentType equipmentType = await db.EquipmentTypes.FindAsync(id);
+            if (equipmentType == null)
             {
                 return HttpNotFound();
             }
-            return View(componentType);
+            return View(equipmentType);
         }
 
-        // GET: ComponentTypes/Create
+        // GET: EquipmentTypes/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ComponentTypes/Create
+        // POST: EquipmentTypes/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Description,Active")] ComponentType componentType)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Description,UsefulLife,GuaranteeDuration,Active")] EquipmentType equipmentType)
         {
             if (ModelState.IsValid)
             {
-                db.ComponentTypes.Add(componentType);
-                db.SaveChanges();
+                db.EquipmentTypes.Add(equipmentType);
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(componentType);
+            return View(equipmentType);
         }
 
-        // GET: ComponentTypes/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: EquipmentTypes/Edit/5
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ComponentType componentType = db.ComponentTypes.Find(id);
-            if (componentType == null)
+            EquipmentType equipmentType = await db.EquipmentTypes.FindAsync(id);
+            if (equipmentType == null)
             {
                 return HttpNotFound();
             }
-            return View(componentType);
+            return View(equipmentType);
         }
 
-        // POST: ComponentTypes/Edit/5
+        // POST: EquipmentTypes/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Description,Active")] ComponentType componentType)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Description,UsefulLife,GuaranteeDuration,Active")] EquipmentType equipmentType)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(componentType).State = EntityState.Modified;
-                db.SaveChanges();
+                db.Entry(equipmentType).State = EntityState.Modified;
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(componentType);
+            return View(equipmentType);
         }
 
-        // GET: ComponentTypes/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: EquipmentTypes/Delete/5
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ComponentType componentType = db.ComponentTypes.Find(id);
-            if (componentType == null)
+            EquipmentType equipmentType = await db.EquipmentTypes.FindAsync(id);
+            if (equipmentType == null)
             {
                 return HttpNotFound();
             }
-            return View(componentType);
+            return View(equipmentType);
         }
 
-        // POST: ComponentTypes/Delete/5
+        // POST: EquipmentTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            ComponentType componentType = db.ComponentTypes.Find(id);
-            db.ComponentTypes.Remove(componentType);
-            db.SaveChanges();
+            EquipmentType equipmentType = await db.EquipmentTypes.FindAsync(id);
+            db.EquipmentTypes.Remove(equipmentType);
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

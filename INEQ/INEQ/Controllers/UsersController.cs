@@ -6,112 +6,111 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using INEQ.Content;
-using INEQ.Models;
+using BaseDatos;
 
 namespace INEQ.Controllers
 {
-    public class StatusController : Controller
+    public class UsersController : Controller
     {
-        private dbINEQcontext db = new dbINEQcontext();
+        private IneqDev db = new IneqDev();
 
-        // GET: Status
+        // GET: Users
         public ActionResult Index()
         {
-            return View(db.Status.ToList());
+            return View(db.Users.ToList());
         }
 
-        // GET: Status/Details/5
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Statu statu = db.Status.Find(id);
-            if (statu == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(statu);
+            return View(user);
         }
 
-        // GET: Status/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Status/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Users/Create
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Description,Active")] Statu statu)
+        public ActionResult Create([Bind(Include = "Id,Name,LastName,UserName,Password,Active")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Status.Add(statu);
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(statu);
+            return View(user);
         }
 
-        // GET: Status/Edit/5
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Statu statu = db.Status.Find(id);
-            if (statu == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(statu);
+            return View(user);
         }
 
-        // POST: Status/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Users/Edit/5
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Description,Active")] Statu statu)
+        public ActionResult Edit([Bind(Include = "Id,Name,LastName,UserName,Password,Active")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(statu).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(statu);
+            return View(user);
         }
 
-        // GET: Status/Delete/5
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Statu statu = db.Status.Find(id);
-            if (statu == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(statu);
+            return View(user);
         }
 
-        // POST: Status/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Statu statu = db.Status.Find(id);
-            db.Status.Remove(statu);
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

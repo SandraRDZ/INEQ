@@ -1,8 +1,7 @@
-﻿@model INEQ.Models.Equipment
+﻿@model BaseDatos.Equipment
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Details</h2>
@@ -11,46 +10,6 @@
     <h4>Equipment</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.StatusID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StatusID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EquipmentTypeld)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EquipmentTypeld)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Modelld)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Modelld)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Brandld)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Brandld)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.WarehouseId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.WarehouseId)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.EntryDate)
         </dt>
@@ -83,9 +42,49 @@
             @Html.DisplayFor(model => model.Active)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Brand.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brand.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EquipmentType.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EquipmentType.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Warehouse.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Warehouse.Description)
+        </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

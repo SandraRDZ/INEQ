@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BaseDatos.ComponentType>
+﻿@model IEnumerable<BaseDatos.EquipmentType>
 
 @{
     ViewBag.Title = "Index";
@@ -15,6 +15,12 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.UsefulLife)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GuaranteeDuration)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Active)
         </th>
         <th></th>
@@ -24,6 +30,12 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UsefulLife)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GuaranteeDuration)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Active)

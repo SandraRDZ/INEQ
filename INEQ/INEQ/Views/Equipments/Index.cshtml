@@ -1,8 +1,7 @@
-﻿@model IEnumerable<INEQ.Models.Equipment>
+﻿@model IEnumerable<BaseDatos.Equipment>
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
@@ -12,21 +11,6 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.StatusID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EquipmentTypeld)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Modelld)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Brandld)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WarehouseId)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.EntryDate)
         </th>
@@ -39,26 +23,26 @@
         <th>
             @Html.DisplayNameFor(model => model.Active)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EquipmentType.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Warehouse.Description)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.StatusID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EquipmentTypeld)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Modelld)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Brandld)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WarehouseId)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.EntryDate)
         </td>
@@ -72,9 +56,24 @@
             @Html.DisplayFor(modelItem => item.Active)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.DisplayFor(modelItem => item.Brand.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EquipmentType.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Warehouse.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
