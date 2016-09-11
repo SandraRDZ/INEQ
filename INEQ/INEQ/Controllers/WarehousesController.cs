@@ -3,32 +3,32 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using INEQ.Content;
-using INEQ.Models;
+using BaseDatos;
 
 namespace INEQ.Controllers
 {
     public class WarehousesController : Controller
     {
-        private dbINEQcontext db = new dbINEQcontext();
+        private IneqDev db = new IneqDev();
 
         // GET: Warehouses
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(db.Warehouses.ToList());
+            return View(await db.Warehouses.ToListAsync());
         }
 
         // GET: Warehouses/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Warehouse warehouse = db.Warehouses.Find(id);
+            Warehouse warehouse = await db.Warehouses.FindAsync(id);
             if (warehouse == null)
             {
                 return HttpNotFound();
@@ -43,16 +43,16 @@ namespace INEQ.Controllers
         }
 
         // POST: Warehouses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Description,Active,IS,Responsable")] Warehouse warehouse)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Description,IS,Responsable,Active")] Warehouse warehouse)
         {
             if (ModelState.IsValid)
             {
                 db.Warehouses.Add(warehouse);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -60,13 +60,13 @@ namespace INEQ.Controllers
         }
 
         // GET: Warehouses/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Warehouse warehouse = db.Warehouses.Find(id);
+            Warehouse warehouse = await db.Warehouses.FindAsync(id);
             if (warehouse == null)
             {
                 return HttpNotFound();
@@ -75,29 +75,29 @@ namespace INEQ.Controllers
         }
 
         // POST: Warehouses/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Description,Active,IS,Responsable")] Warehouse warehouse)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Description,IS,Responsable,Active")] Warehouse warehouse)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(warehouse).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(warehouse);
         }
 
         // GET: Warehouses/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Warehouse warehouse = db.Warehouses.Find(id);
+            Warehouse warehouse = await db.Warehouses.FindAsync(id);
             if (warehouse == null)
             {
                 return HttpNotFound();
@@ -108,11 +108,11 @@ namespace INEQ.Controllers
         // POST: Warehouses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Warehouse warehouse = db.Warehouses.Find(id);
+            Warehouse warehouse = await db.Warehouses.FindAsync(id);
             db.Warehouses.Remove(warehouse);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

@@ -1,8 +1,7 @@
-﻿@model IEnumerable<INEQ.Models.Warehouse>
+﻿@model IEnumerable<BaseDatos.Warehouse>
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
@@ -16,13 +15,13 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Active)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.IS)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Responsable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Active)
         </th>
         <th></th>
     </tr>
@@ -33,18 +32,18 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Active)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.IS)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Responsable)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.DisplayFor(modelItem => item.Active)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

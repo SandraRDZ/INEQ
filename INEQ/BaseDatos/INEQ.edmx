@@ -1,0 +1,705 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="IneqDevDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Component">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="ComponentTypeId" Type="int" />
+          <Property Name="Equipment_Id" Type="int" />
+          <Property Name="EquipmentType_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="ComponentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Equipment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquipmentTypeId" Type="int" />
+          <Property Name="ModelId" Type="int" />
+          <Property Name="BrandId" Type="int" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="WarehouseId" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="Serie" Type="nvarchar(max)" />
+          <Property Name="SofttekId" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EquipmentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="UsefulLife" Type="float" Nullable="false" />
+          <Property Name="GuaranteeDuration" Type="float" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="BrandId" Type="int" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="IsResponsable" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'IneqDevDb.dbo.User' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="Password" />
+            <PropertyRef Name="Active" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IS" Type="nvarchar(max)" />
+          <Property Name="Responsable" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_Component_dbo_ComponentType_ComponentTypeId">
+          <End Role="ComponentType" Type="Self.ComponentType" Multiplicity="0..1" />
+          <End Role="Component" Type="Self.Component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComponentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Component">
+              <PropertyRef Name="ComponentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Component_dbo_Equipment_Equipment_Id">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="Component" Type="Self.Component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Component">
+              <PropertyRef Name="Equipment_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Component_dbo_EquipmentType_EquipmentType_Id">
+          <End Role="EquipmentType" Type="Self.EquipmentType" Multiplicity="0..1" />
+          <End Role="Component" Type="Self.Component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Component">
+              <PropertyRef Name="EquipmentType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Equipment_dbo_Brand_BrandId">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Equipment_dbo_EquipmentType_EquipmentTypeId">
+          <End Role="EquipmentType" Type="Self.EquipmentType" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="EquipmentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Equipment_dbo_Model_ModelId">
+          <End Role="Model" Type="Self.Model" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Equipment_dbo_Status_StatusId">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Equipment_dbo_Warehouse_WarehouseId">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Model_dbo_Brand_BrandId">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="0..1" />
+          <End Role="Model" Type="Self.Model" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Model">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IneqDevDbModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Component" EntityType="Self.Component" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComponentType" EntityType="Self.ComponentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentType" EntityType="Self.EquipmentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Model" EntityType="Self.Model" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [User].[Id] AS [Id], 
+    [User].[Name] AS [Name], 
+    [User].[LastName] AS [LastName], 
+    [User].[UserName] AS [UserName], 
+    [User].[Password] AS [Password], 
+    [User].[Active] AS [Active]
+    FROM [dbo].[User] AS [User]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_dbo_Component_dbo_ComponentType_ComponentTypeId" Association="Self.FK_dbo_Component_dbo_ComponentType_ComponentTypeId">
+            <End Role="ComponentType" EntitySet="ComponentType" />
+            <End Role="Component" EntitySet="Component" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Component_dbo_Equipment_Equipment_Id" Association="Self.FK_dbo_Component_dbo_Equipment_Equipment_Id">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="Component" EntitySet="Component" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Component_dbo_EquipmentType_EquipmentType_Id" Association="Self.FK_dbo_Component_dbo_EquipmentType_EquipmentType_Id">
+            <End Role="EquipmentType" EntitySet="EquipmentType" />
+            <End Role="Component" EntitySet="Component" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Equipment_dbo_Brand_BrandId" Association="Self.FK_dbo_Equipment_dbo_Brand_BrandId">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Equipment_dbo_EquipmentType_EquipmentTypeId" Association="Self.FK_dbo_Equipment_dbo_EquipmentType_EquipmentTypeId">
+            <End Role="EquipmentType" EntitySet="EquipmentType" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Equipment_dbo_Model_ModelId" Association="Self.FK_dbo_Equipment_dbo_Model_ModelId">
+            <End Role="Model" EntitySet="Model" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Equipment_dbo_Status_StatusId" Association="Self.FK_dbo_Equipment_dbo_Status_StatusId">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Equipment_dbo_Warehouse_WarehouseId" Association="Self.FK_dbo_Equipment_dbo_Warehouse_WarehouseId">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Model_dbo_Brand_BrandId" Association="Self.FK_dbo_Model_dbo_Brand_BrandId">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Model" EntitySet="Model" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IneqDevDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Equipments" Relationship="Self.FK_dbo_Equipment_dbo_Brand_BrandId" FromRole="Brand" ToRole="Equipment" />
+          <NavigationProperty Name="Models" Relationship="Self.FK_dbo_Model_dbo_Brand_BrandId" FromRole="Brand" ToRole="Model" />
+        </EntityType>
+        <EntityType Name="Component">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="ComponentTypeId" Type="Int32" />
+          <Property Name="Equipment_Id" Type="Int32" />
+          <Property Name="EquipmentType_Id" Type="Int32" />
+          <NavigationProperty Name="ComponentType" Relationship="Self.FK_dbo_Component_dbo_ComponentType_ComponentTypeId" FromRole="Component" ToRole="ComponentType" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK_dbo_Component_dbo_Equipment_Equipment_Id" FromRole="Component" ToRole="Equipment" />
+          <NavigationProperty Name="EquipmentType" Relationship="Self.FK_dbo_Component_dbo_EquipmentType_EquipmentType_Id" FromRole="Component" ToRole="EquipmentType" />
+        </EntityType>
+        <EntityType Name="ComponentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Components" Relationship="Self.FK_dbo_Component_dbo_ComponentType_ComponentTypeId" FromRole="ComponentType" ToRole="Component" />
+        </EntityType>
+        <EntityType Name="Equipment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipmentTypeId" Type="Int32" />
+          <Property Name="ModelId" Type="Int32" />
+          <Property Name="BrandId" Type="Int32" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="Serie" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SofttekId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Brand" Relationship="Self.FK_dbo_Equipment_dbo_Brand_BrandId" FromRole="Equipment" ToRole="Brand" />
+          <NavigationProperty Name="Components" Relationship="Self.FK_dbo_Component_dbo_Equipment_Equipment_Id" FromRole="Equipment" ToRole="Component" />
+          <NavigationProperty Name="EquipmentType" Relationship="Self.FK_dbo_Equipment_dbo_EquipmentType_EquipmentTypeId" FromRole="Equipment" ToRole="EquipmentType" />
+          <NavigationProperty Name="Model" Relationship="Self.FK_dbo_Equipment_dbo_Model_ModelId" FromRole="Equipment" ToRole="Model" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_dbo_Equipment_dbo_Status_StatusId" FromRole="Equipment" ToRole="Status" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_dbo_Equipment_dbo_Warehouse_WarehouseId" FromRole="Equipment" ToRole="Warehouse" />
+        </EntityType>
+        <EntityType Name="EquipmentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UsefulLife" Type="Double" Nullable="false" />
+          <Property Name="GuaranteeDuration" Type="Double" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Components" Relationship="Self.FK_dbo_Component_dbo_EquipmentType_EquipmentType_Id" FromRole="EquipmentType" ToRole="Component" />
+          <NavigationProperty Name="Equipments" Relationship="Self.FK_dbo_Equipment_dbo_EquipmentType_EquipmentTypeId" FromRole="EquipmentType" ToRole="Equipment" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="BrandId" Type="Int32" />
+          <NavigationProperty Name="Brand" Relationship="Self.FK_dbo_Model_dbo_Brand_BrandId" FromRole="Model" ToRole="Brand" />
+          <NavigationProperty Name="Equipments" Relationship="Self.FK_dbo_Equipment_dbo_Model_ModelId" FromRole="Model" ToRole="Equipment" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="IsResponsable" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Equipments" Relationship="Self.FK_dbo_Equipment_dbo_Status_StatusId" FromRole="Status" ToRole="Equipment" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Responsable" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Equipments" Relationship="Self.FK_dbo_Equipment_dbo_Warehouse_WarehouseId" FromRole="Warehouse" ToRole="Equipment" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="Password" />
+            <PropertyRef Name="Active" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_Equipment_dbo_Brand_BrandId">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Model_dbo_Brand_BrandId">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="0..1" />
+          <End Role="Model" Type="Self.Model" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Model">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Component_dbo_ComponentType_ComponentTypeId">
+          <End Role="ComponentType" Type="Self.ComponentType" Multiplicity="0..1" />
+          <End Role="Component" Type="Self.Component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComponentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Component">
+              <PropertyRef Name="ComponentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Component_dbo_Equipment_Equipment_Id">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="Component" Type="Self.Component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Component">
+              <PropertyRef Name="Equipment_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Component_dbo_EquipmentType_EquipmentType_Id">
+          <End Role="EquipmentType" Type="Self.EquipmentType" Multiplicity="0..1" />
+          <End Role="Component" Type="Self.Component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Component">
+              <PropertyRef Name="EquipmentType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Equipment_dbo_EquipmentType_EquipmentTypeId">
+          <End Role="EquipmentType" Type="Self.EquipmentType" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="EquipmentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Equipment_dbo_Model_ModelId">
+          <End Role="Model" Type="Self.Model" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Equipment_dbo_Status_StatusId">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Equipment_dbo_Warehouse_WarehouseId">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IneqDev" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="Brands" EntityType="Self.Brand" />
+          <EntitySet Name="Components" EntityType="Self.Component" />
+          <EntitySet Name="ComponentTypes" EntityType="Self.ComponentType" />
+          <EntitySet Name="Equipments" EntityType="Self.Equipment" />
+          <EntitySet Name="EquipmentTypes" EntityType="Self.EquipmentType" />
+          <EntitySet Name="Models" EntityType="Self.Model" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_dbo_Equipment_dbo_Brand_BrandId" Association="Self.FK_dbo_Equipment_dbo_Brand_BrandId">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Equipment" EntitySet="Equipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Model_dbo_Brand_BrandId" Association="Self.FK_dbo_Model_dbo_Brand_BrandId">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Model" EntitySet="Models" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Component_dbo_ComponentType_ComponentTypeId" Association="Self.FK_dbo_Component_dbo_ComponentType_ComponentTypeId">
+            <End Role="ComponentType" EntitySet="ComponentTypes" />
+            <End Role="Component" EntitySet="Components" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Component_dbo_Equipment_Equipment_Id" Association="Self.FK_dbo_Component_dbo_Equipment_Equipment_Id">
+            <End Role="Equipment" EntitySet="Equipments" />
+            <End Role="Component" EntitySet="Components" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Component_dbo_EquipmentType_EquipmentType_Id" Association="Self.FK_dbo_Component_dbo_EquipmentType_EquipmentType_Id">
+            <End Role="EquipmentType" EntitySet="EquipmentTypes" />
+            <End Role="Component" EntitySet="Components" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Equipment_dbo_EquipmentType_EquipmentTypeId" Association="Self.FK_dbo_Equipment_dbo_EquipmentType_EquipmentTypeId">
+            <End Role="EquipmentType" EntitySet="EquipmentTypes" />
+            <End Role="Equipment" EntitySet="Equipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Equipment_dbo_Model_ModelId" Association="Self.FK_dbo_Equipment_dbo_Model_ModelId">
+            <End Role="Model" EntitySet="Models" />
+            <End Role="Equipment" EntitySet="Equipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Equipment_dbo_Status_StatusId" Association="Self.FK_dbo_Equipment_dbo_Status_StatusId">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Equipment" EntitySet="Equipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Equipment_dbo_Warehouse_WarehouseId" Association="Self.FK_dbo_Equipment_dbo_Warehouse_WarehouseId">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Equipment" EntitySet="Equipments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IneqDevDbModelStoreContainer" CdmEntityContainer="IneqDev">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="IneqDevDbModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="IneqDevDbModel.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Components">
+            <EntityTypeMapping TypeName="IneqDevDbModel.Component">
+              <MappingFragment StoreEntitySet="Component">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ComponentTypeId" ColumnName="ComponentTypeId" />
+                <ScalarProperty Name="Equipment_Id" ColumnName="Equipment_Id" />
+                <ScalarProperty Name="EquipmentType_Id" ColumnName="EquipmentType_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComponentTypes">
+            <EntityTypeMapping TypeName="IneqDevDbModel.ComponentType">
+              <MappingFragment StoreEntitySet="ComponentType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipments">
+            <EntityTypeMapping TypeName="IneqDevDbModel.Equipment">
+              <MappingFragment StoreEntitySet="Equipment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EquipmentTypeId" ColumnName="EquipmentTypeId" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Serie" ColumnName="Serie" />
+                <ScalarProperty Name="SofttekId" ColumnName="SofttekId" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EquipmentTypes">
+            <EntityTypeMapping TypeName="IneqDevDbModel.EquipmentType">
+              <MappingFragment StoreEntitySet="EquipmentType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UsefulLife" ColumnName="UsefulLife" />
+                <ScalarProperty Name="GuaranteeDuration" ColumnName="GuaranteeDuration" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Models">
+            <EntityTypeMapping TypeName="IneqDevDbModel.Model">
+              <MappingFragment StoreEntitySet="Model">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="IneqDevDbModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="IsResponsable" ColumnName="IsResponsable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="IneqDevDbModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IS" ColumnName="IS" />
+                <ScalarProperty Name="Responsable" ColumnName="Responsable" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="IneqDevDbModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

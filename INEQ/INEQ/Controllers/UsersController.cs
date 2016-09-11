@@ -6,112 +6,111 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using INEQ.Content;
-using INEQ.Models;
+using BaseDatos;
 
-namespace INEQ.Views.Add
+namespace INEQ.Controllers
 {
-    public class EquipmentsController : Controller
+    public class UsersController : Controller
     {
-        private dbINEQcontext db = new dbINEQcontext();
+        private IneqDev db = new IneqDev();
 
-        // GET: Equipments
+        // GET: Users
         public ActionResult Index()
         {
-            return View(db.Equipment.ToList());
+            return View(db.Users.ToList());
         }
 
-        // GET: Equipments/Details/5
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Equipment equipment = db.Equipment.Find(id);
-            if (equipment == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(equipment);
+            return View(user);
         }
 
-        // GET: Equipments/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Equipments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Users/Create
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,StatusID,EquipmentTypeld,Modelld,Brandld,WarehouseId,EntryDate,Serie,SofttekId,Active")] Equipment equipment)
+        public ActionResult Create([Bind(Include = "Id,Name,LastName,UserName,Password,Active")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Equipment.Add(equipment);
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(equipment);
+            return View(user);
         }
 
-        // GET: Equipments/Edit/5
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Equipment equipment = db.Equipment.Find(id);
-            if (equipment == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(equipment);
+            return View(user);
         }
 
-        // POST: Equipments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Users/Edit/5
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,StatusID,EquipmentTypeld,Modelld,Brandld,WarehouseId,EntryDate,Serie,SofttekId,Active")] Equipment equipment)
+        public ActionResult Edit([Bind(Include = "Id,Name,LastName,UserName,Password,Active")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(equipment).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(equipment);
+            return View(user);
         }
 
-        // GET: Equipments/Delete/5
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Equipment equipment = db.Equipment.Find(id);
-            if (equipment == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(equipment);
+            return View(user);
         }
 
-        // POST: Equipments/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Equipment equipment = db.Equipment.Find(id);
-            db.Equipment.Remove(equipment);
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

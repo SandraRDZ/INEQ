@@ -1,4 +1,4 @@
-﻿@model BaseDatos.ComponentType
+﻿@model BaseDatos.EquipmentType
 
 @{
     ViewBag.Title = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>ComponentType</h4>
+    <h4>EquipmentType</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -16,6 +16,22 @@
 
         <dd>
             @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UsefulLife)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsefulLife)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GuaranteeDuration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GuaranteeDuration)
         </dd>
 
         <dt>
